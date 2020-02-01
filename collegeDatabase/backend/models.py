@@ -62,21 +62,3 @@ class College(Base):
         self.cmpl_rt_150 = cmpl_rt_150
         self.city = city
         self.state = state
-
-    def get_average_price(self, income):
-        if self.cost_by_income == {}:
-            return False
-
-        MAX_VAL = 999999999
-        min_range = MAX_VAL
-        for k, v in self.cost_by_income:
-            lohi = k.split("-")
-            lo = int(lohi[0])
-            is_plus = lohi[1] == "plus"
-            if is_plus:
-                hi = MAX_VAL
-            else:
-                hi = int(lohi[1])
-            if lo <= income and (is_plus or income <= hi) and hi - lo < min_range:
-                price = v
-        return price

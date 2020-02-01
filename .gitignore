@@ -1,0 +1,10 @@
+.DS_Store
+*.out
+*.out.*
+*.zip
+data/
+venv/
+__init__.py
+cloud_sql_proxy
+cloudsql/
+__pycache__/

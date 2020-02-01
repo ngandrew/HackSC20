@@ -40,8 +40,7 @@ class College(Base):
     school_url = Column(String(200))
     price_calculator_url = Column(String(200))
 
-
-    def __init__(self, id=None, is_public=None,name=None, cost_by_income=None, price_calculator_url=None, school_url=None):
+    def __init__(self, id=None, is_public=None, name=None, cost_by_income=None, price_calculator_url=None, school_url=None):
         self.id = id
         self.name = name
         self.is_public = is_public
@@ -49,12 +48,20 @@ class College(Base):
         self.price_calculator_url = price_calculator_url
         self.school_url = school_url
 
+    def get_average_price(self, income):
+        if self.cost_by_income == {}:
+            return False
 
-    # def get_average_price(self, income):
-    #     MAX_VAL = 999999
-    #     min_rane = MAX_VAL
-    #     for k, v in self.cost_by_income:
-    #         lohi = k.split("-")
-    #         lo =
-
-
+        MAX_VAL = 999999999
+        min_range = MAX_VAL
+        for k, v in self.cost_by_income:
+            lohi = k.split("-")
+            lo = int(lohi[0])
+            is_plus = lohi[1] == "plus"
+            if is_plus:
+                hi = MAX_VAL
+            else:
+                hi = int(lohi[1])
+            if lo <= income and (is_plus or income <= hi) and hi - lo < min_range:
+                price = v
+        return price

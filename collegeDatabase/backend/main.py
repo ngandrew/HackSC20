@@ -1,9 +1,9 @@
 import sys
 sys.path.append(".")
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Table, Column, String, MetaData, Query
+from sqlalchemy import Table, Column, String, MetaData
 from sqlalchemy.orm import sessionmaker
 
 from database import init_db
@@ -17,42 +17,9 @@ app = Flask(__name__)
 
 @app.route('/helpData')
 def helpData():
-
-    res = db_session.query(HelpText).filter_by(page=request.values.get('location'))
-    # res = {}
-    # res["data"] = [
-    #     {
-    #         "id": 'student_firstName',
-    #         "description": 'It\'s your name :/',
-    #     },
-    #     {
-    #         "id": 'student_middleInit',
-    #         "description": 'middle initial pls (optional)',
-    #     },
-    #     {
-    #         "id": 'student_lastName',
-    #         "description": 'ur last name',
-    #     },
-    #     {
-    #         "id": 'student_dob',
-    #         "description": 'when u were born',
-    #         "link": 'https://www.shutterfly.com/ideas/wp-content/uploads/2016/08/50-happy-birthday-quotes-thumb.jpg'
-    #     }
-    # ]
+    query = db_session.query(HelpText).filter_by(page=request.values.get('location'))
+    res = db_session.execute(query).fetchone()[2]
     return jsonify(res)
-    # u = User(name="Bob", email="a@b.com")
-    # db_session.add(u)
-    # db_session.commit()
-    # if os.environ.get('GAE_ENV') == 'standard':
-    #     # If deployed, use the local socket interface for accessing Cloud SQL
-    #     host = '/cloudsql/{}'.format(db_connection_name)
-    # else:
-    #     # If running locally, use the TCP connections instead
-    #     # Set up Cloud SQL Proxy (cloud.google.com/sql/docs/mysql/sql-proxy)
-    #     # so that your application can use 127.0.0.1:3306 to connect to your
-    #     # Cloud SQL instance
-    #     host = '127.0.0.1'
-
 
 @app.after_request
 def after_request(response):

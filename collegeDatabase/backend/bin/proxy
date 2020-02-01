@@ -3,5 +3,4 @@ key="CLOUD_SQL_CONNECTION_NAME: "
 line=`grep "$key" app.yaml`
 value=${line#*$key}
 
-apikey="AIzaSyDI69GEE3ZoxELHgdgqlXkD1dcujHDd51g"
-./bin/cloud_sql_proxy -instances="$value" -dir=/cloudsql =token=$apikey &
+./bin/cloud_sql_proxy -instances="$value" -dir=/cloudsql &

@@ -7,3 +7,9 @@ env_variables:
   CLOUD_SQL_DATABASE_NAME: college-data-db
   CLOUD_SQL_CONNECTION_NAME: fluent-plate-266907:us-west1:college-data
 # [END gae_python37_cloudsql_config]
+
+# handlers:
+# - url: /api/.*
+#   script: auto
+# - url: /.*
+#   static_dir: static

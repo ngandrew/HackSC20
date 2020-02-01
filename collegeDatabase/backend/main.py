@@ -3,13 +3,13 @@ sys.path.append(".")
 from flask import Flask, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Table, Column, String, MetaData
+from sqlalchemy import Table, Column, String, MetaData, Query
 from sqlalchemy.orm import sessionmaker
 
 from database import init_db
 from database import db_session
 
-from models import User
+from models import User, HelpText
 
 init_db()
 app = Flask(__name__)
@@ -17,26 +17,28 @@ app = Flask(__name__)
 
 @app.route('/helpData')
 def helpData():
-    res = {}
-    res["data"] = [
-        {
-            "id": 'student_firstName',
-            "description": 'It\'s your name :/',
-        },
-        {
-            "id": 'student_middleInit',
-            "description": 'middle initial pls (optional)',
-        },
-        {
-            "id": 'student_lastName',
-            "description": 'ur last name',
-        },
-        {
-            "id": 'student_dob',
-            "description": 'when u were born',
-            "link": 'https://www.shutterfly.com/ideas/wp-content/uploads/2016/08/50-happy-birthday-quotes-thumb.jpg'
-        }
-    ]
+
+    res = db_session.query(HelpText).filter_by(page=request.values.get('location'))
+    # res = {}
+    # res["data"] = [
+    #     {
+    #         "id": 'student_firstName',
+    #         "description": 'It\'s your name :/',
+    #     },
+    #     {
+    #         "id": 'student_middleInit',
+    #         "description": 'middle initial pls (optional)',
+    #     },
+    #     {
+    #         "id": 'student_lastName',
+    #         "description": 'ur last name',
+    #     },
+    #     {
+    #         "id": 'student_dob',
+    #         "description": 'when u were born',
+    #         "link": 'https://www.shutterfly.com/ideas/wp-content/uploads/2016/08/50-happy-birthday-quotes-thumb.jpg'
+    #     }
+    # ]
     return jsonify(res)
     # u = User(name="Bob", email="a@b.com")
     # db_session.add(u)

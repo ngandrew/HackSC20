@@ -2,11 +2,13 @@ var oldHash = window.location.hash;
 const updateHelpData = () => {
 	if (window.location.hash !== oldHash) {
 		oldHash = window.location.hash;
-		chrome.extension.sendMessage({
+		chrome.runtime.sendMessage({
 			type: 'PAGE_CHANGE',
 			payload: window.location.hash,
-		}, response => {
-			response.helpData.forEach(({
+		}, ({ helpData }) => {
+			if (!helpData) return;
+
+			helpData.forEach(({
 				id,
 				description,
 				link,

@@ -1,0 +1,3 @@
+gcloud auth login
+gcloud config set project fluent-plate-266907
+https://collegescorecard.ed.gov/data/

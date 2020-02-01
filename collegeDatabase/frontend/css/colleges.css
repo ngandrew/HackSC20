@@ -1,0 +1,29 @@
+.job_lists .links_locat {
+    flex-wrap: wrap;
+}
+
+.location {
+    flex-grow: 1;
+    flex-basis: 40%;
+    max-width: 40%;
+    text-transform: capitalize;
+}
+
+.location a {
+    color: #777;
+    text-decoration: underline;
+}
+
+.single_jobs {
+    flex-wrap: wrap;
+}
+
+.jobs_left {
+    flex-basis: 70%;
+    flex-grow: 3;
+}
+
+.jobs_right {
+    flex-basis: 0;
+    flex-grow: 1;
+}

@@ -65,9 +65,9 @@ def searchColleges():
             "act75": 35,
             "expectedCost": get_average_price(row["cost_by_income"], int(data.get("income")) if data.get("income") else 50000),
             "difficulty": "very difficult",
-            "calculatorLink": "http://" + row["price_calculator_url"],
+            "calculatorLink": ("http://" if not row["price_calculator_url"].startswith("http") else "") + row["price_calculator_url"],
             "deadline": "1/23",
-            "website": "http://" + row["school_url"],
+            "website": ("http://" if not row["school_url"].startswith("http") else "") + row["school_url"],
         })
 
     return jsonify(res)

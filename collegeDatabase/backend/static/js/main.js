@@ -17,6 +17,7 @@ $(window).on('scroll', function () {
 
 
 $(document).ready(function(){
+  $('#spinner').hide();
 
 // mobile_menu
 var menu = $('ul#navigation');

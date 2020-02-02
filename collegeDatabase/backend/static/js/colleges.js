@@ -12,6 +12,7 @@ $(document).ready(() => {
             publicPrivate,
         };
 
+        $('#spinner').show();
         fetch(`api/colleges?data=${JSON.stringify(data)}`)
         .then(res => res.json())
         .then(res => {
@@ -74,6 +75,7 @@ $(document).ready(() => {
                 </div>`);
                 $('.job_lists .row').append(newContent);
             });
-        });
+        })
+        .finally(() => $('#spinner').hide());
     });
 });

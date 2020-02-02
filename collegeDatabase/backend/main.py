@@ -49,9 +49,11 @@ def searchColleges():
     if is_public != None:
         query += "AND is_public is {} ".format(is_public)
     if data.get("search"):
-        query += "AND name LIKE '{}%'".format(data.get("search"))
+        query += "AND name ILIKE '{}%' ".format(data.get("search"))
+    if data.get("competitivenessFilter"):
+        query += "AND difficulty IN ({}) ".format(','.join(["'{}'".format(x) for x in data.get("competitivenessFilter")]))
 
-    query += "LIMIT 50"
+    query += "ORDER BY in_state_tuition asc LIMIT 50"
     res = []
 
     for row in [{column: value for column, value in rowproxy.items()} for rowproxy in db_session.execute(query)]:

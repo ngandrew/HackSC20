@@ -5,6 +5,13 @@ $(document).ready(() => {
         let actScore = parseInt($('#ACT').val());
         let publicPrivate = $('#publicPrivate option:selected').val();
         let search = $('#search').val();
+        let competitivenessFilter = [];
+
+        $('#difficultyLevels input').each(function() {
+            if ($(this).is(':checked')) {
+                competitivenessFilter.push($(this).val());
+            }
+        });
 
         let data = {
             income,
@@ -12,6 +19,7 @@ $(document).ready(() => {
             actScore,
             publicPrivate,
             search,
+            competitivenessFilter,
         };
 
         $('#spinner').show();
@@ -55,7 +63,7 @@ $(document).ready(() => {
                     <div class="single_jobs white-bg d-flex justify-content-between">
                         <div class="jobs_left d-flex align-items-center">
                             <div class="jobs_conetent" style="width:100%;">
-                                <a href="college_details.html?id=${id}"><h4>${name}</h4></a>
+                                <a href="college_details.html?id=${id}&income=${parseInt($('#estIncome').val())}"><h4>${name}</h4></a>
                                 <div class="links_locat d-flex align-items-center">
                                     <div class="location">
                                         <p> <i class="fa fa-map-marker"></i> ${city}, ${state}</p>
@@ -63,12 +71,20 @@ $(document).ready(() => {
                                     <div class="location">
                                         <p> <i class="fa fa-building"></i>${publicPrivate}</p>
                                     </div>
-                                    <div class="location">
-                                        <p> <i class="fa fa-edit"></i>SAT: ${satString}</p>
-                                    </div>
-                                    <div class="location">
-                                        <p> <i class="fa fa-edit"></i>ACT: ${actString}</p>
-                                    </div>
+                                    ${
+                                        sat_scores
+                                        ?   `<div class="location">
+                                                <p> <i class="fa fa-edit"></i>SAT: ${satString}</p>
+                                            </div>`
+                                        : ''
+                                    }
+                                    ${
+                                        act_scores
+                                        ?   `<div class="location">
+                                                <p> <i class="fa fa-edit"></i>ACT: ${actString}</p>
+                                            </div>`
+                                        : ''
+                                    }
                                     <div class="location">
                                         <p title="Includes room and board & est. financial aid"> <i class="fa fa-credit-card"></i>Expected Cost: $${Number(expectedCost).toLocaleString()}</p>
                                     </div>

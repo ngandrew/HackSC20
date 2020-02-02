@@ -41,3 +41,7 @@
 .job_filter {
     margin-bottom: 30px;
 }
+
+#difficultyLevels label {
+    display: block;
+}

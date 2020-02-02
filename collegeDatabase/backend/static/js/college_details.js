@@ -7,10 +7,8 @@ $(document).ready(() => {
         city,
         state,
         publicPrivate,
-        sat25,
-        sat75,
-        act25,
-        act75,
+        sat_scores,
+        act_scores,
         expectedCost,
         difficulty,
         inState,
@@ -25,8 +23,29 @@ $(document).ready(() => {
         grad4,
         grad5,
         grad6,
+        classSize,
+        website
     }) => {
+        let satString = "";
+        if (sat_scores) {
+            if (sat_scores[0] && sat_scores[2]) {
+                satString = `${sat_scores[0]}-${sat_scores[2]}`;
+            } else {
+                satString = sat_scores[1];
+            }
+        }
+
+        let actString = "";
+        if (act_scores) {
+            if (act_scores[0] && act_scores[2]) {
+                actString = `${act_scores[0]}-${act_scores[2]}`;
+            } else {
+                actString = act_scores[1];
+            }
+        }
+
         $('.bradcam_text a h3').html(name);
+        $('.bradcam_text a').attr('href', website);
         $('.links_locat').empty()
         .append($(`<div class="location">
                         <p> <i class="fa fa-map-marker"></i> ${city}, ${state}</p>
@@ -35,10 +54,10 @@ $(document).ready(() => {
                         <p> <i class="fa fa-building"></i>${publicPrivate}</p>
                     </div>`))
         .append($(`<div class="location">
-                        <p> <i class="fa fa-edit"></i>SAT: ${sat25}-${sat75}</p>
+                        <p> <i class="fa fa-edit"></i>SAT: ${satString}</p>
                     </div>`))
         .append($(`<div class="location">
-                    <p> <i class="fa fa-edit"></i>ACT: ${act25}-${act75}</p>
+                    <p> <i class="fa fa-edit"></i>ACT: ${actString}</p>
                 </div>`));
 
         $('.descript_wrap ul.financial').empty()
@@ -49,10 +68,11 @@ $(document).ready(() => {
         .append($(`<a href="${calculatorLink}" class="boxed-btn3" target="blank">Calculate your Tuition</a>`));
 
         $('.descript_wrap ul.other').empty()
+        .append($(`<li>Undergraduate class size: <span>${classSize}</span></li>`))
         .append($(`<li>College Sports: <span>${athletics}</span></li>`))
-        .append($(`<li>Graduation within 4 years: <span>${grad4}</span></li>`))
-        .append($(`<li>Graduation within 5 years: <span>${grad5}</span></li>`))
-        .append($(`<li>Graduation within 6 years: <span>${grad6}</span></li>`));
+        .append($(`<li>Graduation within 4 years: <span>${grad4}%</span></li>`))
+        .append($(`<li>Graduation within 5 years: <span>${grad5}%</span></li>`))
+        .append($(`<li>Graduation within 6 years: <span>${grad6}%</span></li>`));
 
         $('.job_sumary .job_content ul').empty()
         .append($(`<li>Regular Due Date: <span>${deadline}</span></li>`))

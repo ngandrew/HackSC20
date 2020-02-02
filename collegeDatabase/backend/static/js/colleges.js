@@ -25,16 +25,32 @@ $(document).ready(() => {
                 city,
                 state,
                 publicPrivate,
-                sat25,
-                sat75,
-                act25,
-                act75,
+                sat_scores,
+                act_scores,
                 expectedCost,
                 difficulty,
                 calculatorLink,
                 deadline,
                 website,
             }) => {
+                let satString = "";
+                if (sat_scores) {
+                    if (sat_scores[0] && sat_scores[2]) {
+                        satString = `${sat_scores[0]}-${sat_scores[2]}`;
+                    } else {
+                        satString = sat_scores[1];
+                    }
+                }
+
+                let actString = "";
+                if (act_scores) {
+                    if (act_scores[0] && act_scores[2]) {
+                        actString = `${act_scores[0]}-${act_scores[2]}`;
+                    } else {
+                        actString = act_scores[1];
+                    }
+                }
+                debugger;
                 const newContent = $(`
                 <div class="col-lg-12 col-md-12">
                     <div class="single_jobs white-bg d-flex justify-content-between">
@@ -49,10 +65,10 @@ $(document).ready(() => {
                                         <p> <i class="fa fa-building"></i>${publicPrivate}</p>
                                     </div>
                                     <div class="location">
-                                        <p> <i class="fa fa-edit"></i>SAT: ${sat25}-${sat75}</p>
+                                        <p> <i class="fa fa-edit"></i>SAT: ${satString}</p>
                                     </div>
                                     <div class="location">
-                                        <p> <i class="fa fa-edit"></i>ACT: ${act25}-${act75}</p>
+                                        <p> <i class="fa fa-edit"></i>ACT: ${actString}</p>
                                     </div>
                                     <div class="location">
                                         <p title="Includes room and board & est. financial aid"> <i class="fa fa-credit-card"></i>Expected Cost: $${Number(expectedCost).toLocaleString()}</p>

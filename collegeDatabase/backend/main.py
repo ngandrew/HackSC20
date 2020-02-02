@@ -44,7 +44,7 @@ def get_average_price(cost_by_income, income):
 @app.route('/api/colleges')
 def searchColleges():
     data = json.loads(request.values.get("data"))
-    query = "SELECT * FROM colleges WHERE id IS NOT NULL "
+    query = "SELECT * FROM colleges_data WHERE id IS NOT NULL "
     is_public = True if request.values.get("publicPrivate") == "public" else False if data.get("publicPrivate") == "private" else None
     if is_public != None:
         query += "AND is_public is {} ".format(is_public)
@@ -61,10 +61,8 @@ def searchColleges():
             "city": row.get("city"),
             "state": row.get("state"),
             "publicPrivate": "public" if row.get("is_public") else "private",
-            "sat25": 800,
-            "sat75": 1500,
-            "act25": 28,
-            "act75": 35,
+            "sat_scores": row.get("sat_scores"),
+            "act_scores": row.get("act_scores"),
             "expectedCost": get_average_price(row.get("cost_by_income"), int(data.get("income")) if data.get("income") else 50000),
             "difficulty": row.get("difficulty"),
             "calculatorLink": ("http://" if not row.get("price_calculator_url").startswith("http") else "") + row.get("price_calculator_url"),
@@ -77,7 +75,7 @@ def searchColleges():
 @app.route('/api/college_details')
 def getCollegeDetails():
     id = int(request.values.get("id"))
-    query = "SELECT * FROM colleges WHERE id = {}".format(id)
+    query = "SELECT * FROM colleges_data WHERE id = {}".format(id)
     row = {column: value for column, value in db_session.execute(query).fetchone().items()}
     if row:
         grad_within = row.get("grad_within")
@@ -86,14 +84,12 @@ def getCollegeDetails():
             "city": row.get("city"),
             "state": row.get("state"),
             "publicPrivate": "public" if row.get("is_public") else "private",
-            "sat25": 800,
-            "sat75": 1500,
-            "act25": 28,
-            "act75": 35,
+            "sat_scores": row.get("sat_scores"),
+            "act_scores": row.get("act_scores"),
             "expectedCost": get_average_price(row.get("cost_by_income"), 50000),
             "difficulty": row.get("difficulty"),
-            "inState": 1,
-            "outOfState": 10000,
+            "inState": row.get("in_state_tuition"),
+            "outOfState": row.get("out_state_tuition"),
             "roomAndBoard": row.get("room_board"),
             "calculatorLink": ("http://" if not row.get("price_calculator_url").startswith("http") else "") + row.get("price_calculator_url"),
             "deadline": row.get("r_admission"),
@@ -104,6 +100,8 @@ def getCollegeDetails():
             "grad5": grad_within.get("5years_grate") if grad_within else None,
             "grad6": grad_within.get("6years_grate") if grad_within else None,
             "isUc": "University of California" in row.get("name"),
+            "appFee": row.get("online_fee"),
+            "classSize": row.get("ug_size"),
         })
 
     return jsonify({});

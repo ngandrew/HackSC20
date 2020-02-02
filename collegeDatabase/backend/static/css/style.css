@@ -460,8 +460,8 @@ h3 {
 
 /* line 43, ../../Arafath/CL/December/235. Job board/HTML/scss/_btn.scss */
 .boxed-btn3:hover {
-  color: #00D363 !important;
-  border: 1px solid #00D363;
+  color: rgba(252,174,100,.77) !important;
+  border: 1px solid rgba(252,174,100,.77);
   background: transparent;
 }
 
@@ -3419,7 +3419,7 @@ h3 {
 
 /* line 123, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_list.scss */
 .job_listing_area .job_lists .single_jobs:hover {
-  border-color: #B2F2D0;
+  border-color: rgba(252,174,100,.77);
 }
 
 /* line 130, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_list.scss */
@@ -3932,7 +3932,7 @@ h3 {
 
 /* line 42, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_details.scss */
 .job_details_area .single_jobs .jobs_left .jobs_conetent h4:hover {
-  color: #00D363;
+  color: rgba(252,174,100,0.77);
 }
 
 @media (max-width: 767px) {

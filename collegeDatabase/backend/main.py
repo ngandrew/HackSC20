@@ -45,7 +45,7 @@ def get_average_price(cost_by_income, income):
 def searchColleges():
     data = json.loads(request.values.get("data"))
     query = "SELECT * FROM colleges_data WHERE id IS NOT NULL "
-    is_public = True if request.values.get("publicPrivate") == "public" else False if data.get("publicPrivate") == "private" else None
+    is_public = True if data.get("publicPrivate") == "public" else False if data.get("publicPrivate") == "private" else None
     if is_public != None:
         query += "AND is_public is {} ".format(is_public)
     if data.get("search"):

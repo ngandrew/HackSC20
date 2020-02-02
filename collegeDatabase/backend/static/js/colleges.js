@@ -50,7 +50,6 @@ $(document).ready(() => {
                         actString = act_scores[1];
                     }
                 }
-                debugger;
                 const newContent = $(`
                 <div class="col-lg-12 col-md-12">
                     <div class="single_jobs white-bg d-flex justify-content-between">
@@ -81,9 +80,9 @@ $(document).ready(() => {
                         </div>
                         <div class="jobs_right">
                             <div class="apply_now pull-right">
-                                <a href="${calculatorLink}" class="boxed-btn3" target="blank"><i class="fa fa-calculator"></i></a>
+                                <a href="${calculatorLink}" class="boxed-btn3" target="blank" style="font-size:36px;"><i class="fa fa-calculator"></i></a>
                             </div>
-                            <div class="date pull-right">
+                            <div class="date pull-right text-center">
                                 <p>Deadline: ${deadline}</p>
                             </div>
                         </div>

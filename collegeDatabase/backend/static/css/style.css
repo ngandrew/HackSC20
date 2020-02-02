@@ -436,7 +436,7 @@ h3 {
 /* line 24, ../../Arafath/CL/December/235. Job board/HTML/scss/_btn.scss */
 .boxed-btn3 {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#F91842+0,fd8e5e+100 */
-  background: #00D363;
+  background: rgba(252,174,100,.77);
   color: #fff;
   display: inline-block;
   padding: 13px 29px 13px 29px;

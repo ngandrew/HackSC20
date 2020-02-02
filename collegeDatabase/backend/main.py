@@ -13,7 +13,7 @@ from database import db_session
 from models import HelpText, College
 
 init_db()
-app = Flask(__name__, static_folder="static", static_url_path="")
+app = Flask(__name__)#, static_folder="static", static_url_path="")
 
 
 @app.route('/api/helpData')
@@ -48,29 +48,65 @@ def searchColleges():
     is_public = True if request.values.get("publicPrivate") == "public" else False if data.get("publicPrivate") == "private" else None
     if is_public != None:
         query += "AND is_public is {} ".format(is_public)
+    if data.get("search"):
+        query += "AND name LIKE '{}%'".format(data.get("search"))
 
     query += "LIMIT 50"
     res = []
 
     for row in [{column: value for column, value in rowproxy.items()} for rowproxy in db_session.execute(query)]:
         res.append({
-            "id": row["id"],
-            "name": row["name"],
-            "city": "Los Angeles",
-            "state": "CA",
-            "publicPrivate": "public" if row["is_public"] else "private",
+            "id": row.get("id"),
+            "name": row.get("name"),
+            "city": row.get("city"),
+            "state": row.get("state"),
+            "publicPrivate": "public" if row.get("is_public") else "private",
             "sat25": 800,
             "sat75": 1500,
             "act25": 28,
             "act75": 35,
-            "expectedCost": get_average_price(row["cost_by_income"], int(data.get("income")) if data.get("income") else 50000),
-            "difficulty": "very difficult",
-            "calculatorLink": ("http://" if not row["price_calculator_url"].startswith("http") else "") + row["price_calculator_url"],
-            "deadline": "1/23",
-            "website": ("http://" if not row["school_url"].startswith("http") else "") + row["school_url"],
+            "expectedCost": get_average_price(row.get("cost_by_income"), int(data.get("income")) if data.get("income") else 50000),
+            "difficulty": row.get("difficulty"),
+            "calculatorLink": ("http://" if not row.get("price_calculator_url").startswith("http") else "") + row.get("price_calculator_url"),
+            "deadline": row.get("r_admission"),
+            "website": ("http://" if not row.get("school_url").startswith("http") else "") + row.get("school_url"),
         })
 
     return jsonify(res)
+
+@app.route('/api/college_details')
+def getCollegeDetails():
+    id = int(request.values.get("id"))
+    query = "SELECT * FROM colleges WHERE id = {}".format(id)
+    row = {column: value for column, value in db_session.execute(query).fetchone().items()}
+    if row:
+        grad_within = row.get("grad_within")
+        return jsonify({
+            "name": row.get("name"),
+            "city": row.get("city"),
+            "state": row.get("state"),
+            "publicPrivate": "public" if row.get("is_public") else "private",
+            "sat25": 800,
+            "sat75": 1500,
+            "act25": 28,
+            "act75": 35,
+            "expectedCost": get_average_price(row.get("cost_by_income"), 50000),
+            "difficulty": row.get("difficulty"),
+            "inState": 1,
+            "outOfState": 10000,
+            "roomAndBoard": row.get("room_board"),
+            "calculatorLink": ("http://" if not row.get("price_calculator_url").startswith("http") else "") + row.get("price_calculator_url"),
+            "deadline": row.get("r_admission"),
+            "website": ("http://" if not row.get("school_url").startswith("http") else "") + row.get("school_url"),
+            "essays": row.get("essay"),
+            "athletics": row.get("athletics_div"),
+            "grad4": grad_within.get("4years_grate") if grad_within else None,
+            "grad5": grad_within.get("5years_grate") if grad_within else None,
+            "grad6": grad_within.get("6years_grate") if grad_within else None,
+            "isUc": "University of California" in row.get("name"),
+        })
+
+    return jsonify({});
 
 
 @app.route('/', defaults={'path': 'index.html'})

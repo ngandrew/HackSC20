@@ -13,3 +13,5 @@ env_variables:
 #   script: auto
 # - url: /.*
 #   static_dir: static
+
+default_expiration: '5s'

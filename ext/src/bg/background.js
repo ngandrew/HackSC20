@@ -4,10 +4,15 @@
 //     "sample_setting": "This is how you use Store.js to remember values"
 // });
 const getHelpData = (hash) => {
-    let location = hash.match(/#\/CYCLE2021_APPLICATION\/([A-Z0-9_\/]*);/)[1];
-    return fetch(`api/helpData?location=${location}`)
-    .then(res => res.json())
-    .then(({ data }) => data);
+    let location = hash.match(/#\/CYCLE2021_APPLICATION\/([A-Z0-9_\/]*);/);
+    if (location && location.length > 1) {
+        debugger;
+        return fetch(`https://fluent-plate-266907.appspot.com/api/helpData?location=${location[1]}`)
+            .then(res => res.json())
+            .then(({ data }) => data);
+    }
+
+    return Promise.resolve([]);
 }
 
 //example of using a message handler from the inject scripts

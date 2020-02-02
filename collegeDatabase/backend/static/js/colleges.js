@@ -4,12 +4,14 @@ $(document).ready(() => {
         let satScore = parseInt($('#SAT').val());
         let actScore = parseInt($('#ACT').val());
         let publicPrivate = $('#publicPrivate option:selected').val();
+        let search = $('#search').val();
 
         let data = {
             income,
             satScore,
             actScore,
             publicPrivate,
+            search,
         };
 
         $('#spinner').show();
@@ -38,7 +40,7 @@ $(document).ready(() => {
                     <div class="single_jobs white-bg d-flex justify-content-between">
                         <div class="jobs_left d-flex align-items-center">
                             <div class="jobs_conetent" style="width:100%;">
-                                <a href="job_details.html?id=${id}"><h4>${name}</h4></a>
+                                <a href="college_details.html?id=${id}"><h4>${name}</h4></a>
                                 <div class="links_locat d-flex align-items-center">
                                     <div class="location">
                                         <p> <i class="fa fa-map-marker"></i> ${city}, ${state}</p>

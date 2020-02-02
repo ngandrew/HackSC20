@@ -6,7 +6,6 @@
 const getHelpData = (hash) => {
     let location = hash.match(/#\/CYCLE2021_APPLICATION\/([A-Z0-9_\/]*);/);
     if (location && location.length > 1) {
-        debugger;
         return fetch(`https://fluent-plate-266907.appspot.com/api/helpData?location=${location[1]}`)
             .then(res => res.json())
             .then(({ data }) => data);

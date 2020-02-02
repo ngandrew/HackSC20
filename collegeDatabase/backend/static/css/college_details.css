@@ -1,0 +1,21 @@
+.location {
+    flex-basis: 40%;
+    text-transform: capitalize;
+}
+
+.links_locat {
+    flex-wrap: wrap;
+}
+
+.job_sumary {
+    margin-bottom: 30px;
+}
+
+.descript_wrap li {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.descript_wrap li span {
+    font-weight: 400;
+}

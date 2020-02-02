@@ -12,7 +12,8 @@ $(document).ready(() => {
             publicPrivate,
         };
 
-        fetch(`http://127.0.0.1:8080/colleges?data=${JSON.stringify(data)}`)
+        $('#spinner').show();
+        fetch(`api/colleges?data=${JSON.stringify(data)}`)
         .then(res => res.json())
         .then(res => {
             $('.job_lists .row').empty();
@@ -74,6 +75,7 @@ $(document).ready(() => {
                 </div>`);
                 $('.job_lists .row').append(newContent);
             });
-        });
+        })
+        .finally(() => $('#spinner').hide());
     });
 });

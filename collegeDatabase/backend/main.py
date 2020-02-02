@@ -10,13 +10,13 @@ import json
 from database import init_db
 from database import db_session
 
-from models import User, HelpText, College
+from models import HelpText, College
 
 init_db()
-app = Flask(__name__, static_folder="../frontend", static_url_path="")
+app = Flask(__name__, static_folder="static", static_url_path="")
 
 
-@app.route('/helpData')
+@app.route('/api/helpData')
 def helpData():
     query = db_session.query(HelpText).filter_by(page=request.values.get("location"))
     res = db_session.execute(query).fetchone()[2]
@@ -41,7 +41,7 @@ def get_average_price(cost_by_income, income):
             price = v
     return price
 
-@app.route('/colleges')
+@app.route('/api/colleges')
 def searchColleges():
     data = json.loads(request.values.get("data"))
     query = "SELECT * FROM colleges WHERE id IS NOT NULL "
@@ -65,9 +65,9 @@ def searchColleges():
             "act75": 35,
             "expectedCost": get_average_price(row["cost_by_income"], int(data.get("income")) if data.get("income") else 50000),
             "difficulty": "very difficult",
-            "calculatorLink": "http://" + row["price_calculator_url"],
+            "calculatorLink": ("http://" if not row["price_calculator_url"].startswith("http") else "") + row["price_calculator_url"],
             "deadline": "1/23",
-            "website": "http://" + row["school_url"],
+            "website": ("http://" if not row["school_url"].startswith("http") else "") + row["school_url"],
         })
 
     return jsonify(res)

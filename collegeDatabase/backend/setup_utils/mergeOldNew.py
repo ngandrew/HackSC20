@@ -21,17 +21,20 @@ with open(FN, "r", errors='replace') as f:
         else:
             print(d)
 
-print(len(data))
-print(len(newMap))
+# print(len(data))
+# print(len(newMap))
 # print("+++++++++++++")
 
 init_db()
 
 for college in db_session.query(College).all():
     index = college.school_url.strip("https://").strip("http://").strip("/")
-    if index not in newMap:
+    if index not in newMap and "University of California" not in college.name:
         continue
-    entry = newMap[index]
+    if "University of California" in college.name:
+        entry = {}
+    else:
+        entry = newMap[index]
     try:
         nc = NewCollege(id=college.id, is_public=college.is_public, name=college.name, cost_by_income=college.cost_by_income, price_calculator_url=college.price_calculator_url, school_url=college.school_url, act_scores=college.act_scores, sat_scores=college.sat_scores, ug_size=college.ug_size, cmpl_rt_150=college.cmpl_rt_150, city=college.city, state=college.state, r_admission=entry.get("r_admission"), online_fee=entry.get("online_fee"), essay=entry.get("essay"), grad_within=entry.get("grad_within"), difficulty=entry.get("difficulty"), med_gpa=entry.get("gpa"), room_board=entry.get("room_board"), athletics_div=entry.get("athletics_div"), in_state_tuition=college.in_state_tuition, out_state_tuition=college.out_state_tuition)
     except ValueError:

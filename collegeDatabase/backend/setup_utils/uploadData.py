@@ -104,13 +104,13 @@ with open(FN, "r", errors='replace') as f:
             if not sa or not sb:
                 sat25 = 0
             else:
-                sat25 = (sat25a+sat25b)/2
+                sat25 = (sat25a+sat25b)
             sat75a, sa = try_cast(dl[sat751], float)
             sat75b, sb = try_cast(dl[sat752], float)
             if not sa or not sb:
                 sat75 = 0
             else:
-                sat75 = (sat75a+sat75b)/2
+                sat75 = (sat75a+sat75b)
             sat_scores = [sat25,float(med_sat),sat75]
         else:
             sat_scores = None
